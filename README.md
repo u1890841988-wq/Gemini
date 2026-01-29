@@ -3,146 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Task Planner</title>
+    <title>Keynote Style Dashboard</title>
     <style>
-        :root {
-            --primary: #2563eb;
-            --bg: #f8fafc;
-            --text: #1e293b;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            /* Der blaue Wellen-Hintergrund */
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Obere schwarze Box */
+        .hero-card {
+            background: rgba(30, 30, 30, 0.95);
+            width: 90%;
+            max-width: 850px;
+            height: 380px;
+            border-radius: 40px 40px 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+
+        .hero-card h1 {
+            font-size: 80px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+        }
+
+        .btn {
+            width: 280px;
+            padding: 14px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-blue { background: #007aff; color: white; }
+        .btn-dark { background: #2c2c2e; color: white; }
+        .btn:hover { opacity: 0.8; }
+
+        /* Unterer Glas-Bereich */
+        .content-area {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px); /* Der entscheidende Blur-Effekt */
+            -webkit-backdrop-filter: blur(25px);
+            width: 95%;
+            max-width: 950px;
+            height: 450px;
+            margin-top: -30px;
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Navigation oben im Glas-Bereich */
+        .nav-bar {
             display: flex;
             justify-content: center;
-            padding: 2rem;
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
-        .container {
+        .nav-item {
+            padding: 6px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .nav-active { background: rgba(255, 255, 255, 0.2); }
+
+        /* Raster für die Präsentationen */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 30px;
+            padding: 0 40px;
+        }
+
+        .item {
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .item:hover { transform: scale(1.05); }
+
+        .thumb {
+            width: 130px;
+            height: 85px;
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        h2 { margin-top: 0; color: var(--primary); }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 1.5rem;
-        }
-
-        input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            outline: none;
-        }
-
-        button#add-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        ul { list-style: none; padding: 0; }
-
-        li {
-            background: #f1f5f9;
-            margin-bottom: 8px;
-            padding: 10px;
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .completed { text-decoration: line-through; opacity: 0.6; }
-
-        .delete-btn {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 5px 10px;
             border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
+            margin: 0 auto 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .item p { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+        .item span { font-size: 11px; color: rgba(255,255,255,0.6); }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🎯 Task Planner</h2>
-    <div class="input-group">
-        <input type="text" id="taskInput" placeholder="Was steht an?">
-        <button id="add-btn">Hinzufügen</button>
+    <div class="hero-card">
+        <h1>Keynote</h1>
+        <button class="btn btn-blue">Thema auswählen</button>
+        <button class="btn btn-dark">Gliederung starten</button>
     </div>
-    <ul id="taskList"></ul>
-</div>
 
-<script>
-    const input = document.getElementById('taskInput');
-    const btn = document.getElementById('add-btn');
-    const list = document.getElementById('taskList');
+    <div class="content-area">
+        <div class="nav-bar">
+            <div class="nav-item">Verlauf</div>
+            <div class="nav-item nav-active">Geteilt</div>
+            <div class="nav-item">Durchsuchen</div>
+        </div>
 
-    // 1. Lade gespeicherte Tasks beim Start
-    document.addEventListener('DOMContentLoaded', getTasks);
-
-    // 2. Task hinzufügen
-    btn.addEventListener('click', () => {
-        if (input.value === "") return;
-        createTaskElement(input.value);
-        saveLocal(input.value);
-        input.value = "";
-    });
-
-    function createTaskElement(text) {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <span onclick="this.parentElement.classList.toggle('completed')">${text}</span>
-            <button class="delete-btn" onclick="removeTask(this)">Löschen</button>
-        `;
-        list.appendChild(li);
-    }
-
-    // 3. Im LocalStorage speichern
-    function saveLocal(task) {
-        let tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
-        tasks.push(task);
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
-
-    // 4. Tasks aus Speicher laden
-    function getTasks() {
-        let tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
-        tasks.forEach(task => createTaskElement(task));
-    }
-
-    // 5. Löschen
-    function removeTask(btn) {
-        const taskText = btn.parentElement.firstChild.textContent.trim();
-        let tasks = JSON.parse(localStorage.getItem('tasks'));
-        const newTasks = tasks.filter(t => t !== taskText);
-        localStorage.setItem('tasks', JSON.stringify(newTasks));
-        btn.parentElement.remove();
-    }
-</script>
+        <div class="grid">
+            <div class="item">
+                <div class="thumb" style="background: #333;"></div>
+                <p>Präsentation 4</p>
+                <span>Heute, 14:13</span>
+            </div>
+            <div class="item">
+                <div class="thumb"></div>
+                <p>Präsentation 3</p>
+                <span>18.11.25, 11:13</span>
+            </div>
+            <div class="item">
+                <div class="thumb" style="background: linear-gradient(to right, #4facfe, #00f2fe);"></div>
+                <p>Urlaub</p>
+                <span>16.06.25, 10:26</span>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
