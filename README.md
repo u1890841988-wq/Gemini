@@ -3,220 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Keynote iPad Pro</title>
+    <title>Modern Keynote</title>
     <style>
         :root {
             --apple-blue: #007aff;
-            --card-bg: #1c1c1e;
-            --sidebar-bg: #161617;
+            --bg-dark: #1c1c1e;
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "SF Pro Display", -apple-system, sans-serif; user-select: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "SF Pro", -apple-system, sans-serif; }
 
         body {
-            background: url('https://www.apple.com/v/ipad-pro/aj/images/overview/experience/specs__e6z9m7w7x9ua_large.jpg') no-repeat center center fixed;
-            background-size: cover;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow: hidden;
-            padding-top: 2vh;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            height: 100vh; display: flex; flex-direction: column; align-items: center; overflow: hidden; color: white;
         }
 
-        /* --- MAIN UI --- */
-        .main-card {
-            background-color: var(--card-bg);
-            width: 80%;
-            max-width: 850px;
-            padding: 60px 0;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            z-index: 10;
+        /* STARTBILDSCHIRM */
+        .hero {
+            background: var(--bg-dark); width: 85%; max-width: 900px;
+            margin-top: 5vh; padding: 60px; border-radius: 40px;
+            text-align: center; box-shadow: 0 40px 100px rgba(0,0,0,0.5); z-index: 5;
         }
 
-        h1 { font-size: 90px; font-weight: 600; margin-bottom: 40px; letter-spacing: -2px; color: white; }
+        .hero h1 { font-size: clamp(40px, 8vw, 90px); margin-bottom: 40px; font-weight: 700; letter-spacing: -2px; }
 
+        .btn-group { display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .btn {
-            width: 280px; padding: 16px; border-radius: 40px; border: none;
-            font-size: 17px; cursor: pointer; margin-bottom: 12px; font-weight: 500;
+            width: 300px; padding: 18px; border-radius: 50px; border: none;
+            font-size: 18px; font-weight: 500; cursor: pointer; transition: 0.2s;
         }
-        .btn-blue { background: var(--apple-blue); color: white; }
-        .btn-dark { background: #2c2c2e; color: white; }
+        .btn-main { background: var(--apple-blue); color: white; }
+        .btn-sub { background: #2c2c2e; color: white; }
 
-        .glass-panel {
-            background: rgba(20, 20, 22, 0.7);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            width: 90%;
-            max-width: 1000px;
-            height: 450px;
-            margin-top: -60px;
-            border-radius: 40px;
-            padding: 40px;
-            border: 0.5px solid rgba(255,255,255,0.1);
+        /* DASHBOARD */
+        .dashboard {
+            background: rgba(20, 20, 22, 0.7); backdrop-filter: blur(50px);
+            width: 95%; max-width: 1100px; height: 50vh;
+            margin-top: -50px; border-radius: 40px; padding: 40px;
+            border: 1px solid rgba(255,255,255,0.1); overflow-y: auto;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 40px;
-            overflow-y: auto;
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; }
+        .card { text-align: center; cursor: pointer; transition: 0.2s; }
+        .card:active { transform: scale(0.95); }
+        .thumb { width: 100%; aspect-ratio: 16/10; background: #333; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
-        .item { text-align: center; color: white; }
-        .thumbnail {
-            width: 150px; aspect-ratio: 16/10;
-            background: #333; border-radius: 4px;
-            margin: 0 auto 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-
-        /* --- EDITOR (IMG_1288 Style) --- */
+        /* EDITOR (FUNKTIONAL) */
         #editor {
-            position: fixed; inset: 0;
-            background: #000; z-index: 2000;
+            position: fixed; inset: 0; background: #000; z-index: 100;
             display: none; flex-direction: column;
         }
 
-        .editor-top-bar {
-            height: 55px; background: #1c1c1e;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 20px; border-bottom: 0.5px solid #333;
+        .toolbar {
+            height: 60px; background: #1c1c1e; display: flex; 
+            justify-content: space-between; align-items: center; padding: 0 25px;
+            border-bottom: 1px solid #333;
         }
 
-        .editor-main { display: flex; flex-grow: 1; }
+        .editor-body { display: flex; flex-grow: 1; }
+        .sidebar { width: 220px; background: #161617; border-right: 1px solid #333; padding: 20px; }
+        .mini-slide { width: 100%; aspect-ratio: 16/10; background: white; border: 3px solid var(--apple-blue); border-radius: 8px; }
 
-        .sidebar {
-            width: 180px; background: var(--sidebar-bg);
-            border-right: 0.5px solid #333; padding: 20px 10px;
-            display: flex; flex-direction: column; gap: 15px;
+        .canvas { flex-grow: 1; display: flex; justify-content: center; align-items: center; padding: 40px; background: #111; }
+        
+        /* Das ist jetzt ein echtes Textfeld! */
+        .slide {
+            width: 100%; max-width: 900px; aspect-ratio: 16/9; background: white;
+            color: black; padding: 80px; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            outline: none; text-align: left;
         }
 
-        .slide-thumb {
-            width: 100%; aspect-ratio: 16/10;
-            background: white; border-radius: 4px;
-            border: 2px solid var(--apple-blue);
-        }
+        .slide h2 { font-size: 50px; margin-bottom: 20px; outline: none; }
+        .slide p { font-size: 24px; color: #666; outline: none; }
 
-        .canvas-area {
-            flex-grow: 1; background: #111;
-            display: flex; justify-content: center; align-items: center;
-            padding: 40px;
-        }
-
-        .slide-white {
-            width: 90%; max-width: 800px; aspect-ratio: 16/9;
-            background: white; color: black; padding: 60px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-
-        /* Context Menu */
         #contextMenu {
-            position: fixed; background: rgba(35, 35, 35, 0.95);
-            border-radius: 12px; width: 200px; display: none; z-index: 3000;
-            border: 0.5px solid #444; overflow: hidden;
+            position: fixed; background: #2c2c2e; border-radius: 12px;
+            width: 180px; display: none; z-index: 200; border: 1px solid #444;
         }
-        .menu-item { padding: 12px 20px; color: white; border-bottom: 0.5px solid #444; }
+        .menu-item { padding: 15px; border-bottom: 1px solid #444; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="main-card">
-        <h1>Keynote</h1>
-        <button class="btn btn-blue" onclick="addPresentation()">Thema auswählen</button>
-        <button class="btn btn-dark">Gliederung starten</button>
-    </div>
-
-    <div class="glass-panel">
-        <div id="grid" class="grid"></div>
+    <div id="home">
+        <div class="hero">
+            <h1>Keynote</h1>
+            <div class="btn-group">
+                <button class="btn btn-main" onclick="createProject()">Thema auswählen</button>
+                <button class="btn btn-sub">Gliederung starten</button>
+            </div>
+        </div>
+        <div class="dashboard">
+            <div id="grid" class="grid"></div>
+        </div>
     </div>
 
     <div id="editor">
-        <div class="editor-top-bar">
-            <div style="color: var(--apple-blue); cursor: pointer;" onclick="closeEditor()">❮ Präsentationen</div>
-            <div id="editorTitle">Präsentation 3</div>
-            <div style="color: var(--apple-blue);">Teilen</div>
-        </div>
-        <div class="editor-main">
-            <div class="sidebar">
-                <div class="slide-thumb"></div>
-                <div style="width: 30px; height: 30px; background: #333; border-radius: 5px; margin-top: auto; display: flex; align-items: center; justify-content: center;">+</div>
+        <div class="toolbar">
+            <div style="color: var(--apple-blue); cursor: pointer;" onclick="closeEditor()">❮ Fertig</div>
+            <div id="currentTitle" style="font-weight: 600;">Unbenannt</div>
+            <div style="display: flex; gap: 20px;">
+                <button onclick="document.execCommand('bold')" style="background:none; border:none; color:white; font-size:20px;"><b>B</b></button>
+                <button onclick="saveSlide()" style="color: var(--apple-blue); background:none; border:none;">Speichern</button>
             </div>
-            <div class="canvas-area">
-                <div class="slide-white">
-                    <h1 id="canvasTitle" style="color: black; font-size: 48px; text-align: left;">Titel der Präsentation</h1>
-                    <p style="color: #666; font-size: 24px;">Präsentationsuntertitel</p>
+        </div>
+        <div class="editor-body">
+            <div class="sidebar">
+                <div class="mini-slide"></div>
+            </div>
+            <div class="canvas">
+                <div class="slide" contenteditable="true" id="mainSlide">
+                    <h2 id="sTitle">Titel eingeben</h2>
+                    <p id="sSub">Untertitel hier tippen...</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="contextMenu">
-        <div class="menu-item" onclick="renameCurrent()">Umbenennen</div>
-        <div class="menu-item" style="color: #ff453a;" onclick="deleteCurrent()">Löschen</div>
+        <div class="menu-item" onclick="deleteProject()">Löschen</div>
+        <div class="menu-item" onclick="renameProject()">Umbenennen</div>
     </div>
 
     <script>
-        // ... (Gleiche Logik wie vorher, aber angepasst an das neue UI)
-        const grid = document.getElementById('grid');
-        const menu = document.getElementById('contextMenu');
-        const editor = document.getElementById('editor');
-        let selectedId = null;
-        let pressTimer = null;
+        let projects = JSON.parse(localStorage.getItem('projects') || '[]');
+        let currentId = null;
 
-        function addPresentation() {
-            const name = prompt("Name:");
-            if (!name) return;
-            const p = { name, date: "Heute, 14:30", id: Date.now() };
-            saveToStorage(p);
-            renderItem(p);
+        function render() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            projects.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `<div class="thumb"></div><p>${p.name}</p><span style="font-size:12px; color:#888;">${p.date}</span>`;
+                div.onclick = () => openEditor(p);
+                div.oncontextmenu = (e) => {
+                    e.preventDefault();
+                    currentId = p.id;
+                    const menu = document.getElementById('contextMenu');
+                    menu.style.display = 'block';
+                    menu.style.left = e.pageX + 'px';
+                    menu.style.top = e.pageY + 'px';
+                };
+                grid.appendChild(div);
+            });
         }
 
-        function renderItem(p) {
-            const div = document.createElement('div');
-            div.className = 'item';
-            div.id = 'p-' + p.id;
-            div.onmousedown = (e) => { selectedId = p.id; pressTimer = setTimeout(() => showMenu(e), 600); };
-            div.onmouseup = () => clearTimeout(pressTimer);
-            div.onclick = () => { if(menu.style.display !== 'block') openEditor(p.name); };
-            div.innerHTML = `<div class="thumbnail"></div><p>${p.name}</p><span>${p.date}</span>`;
-            grid.appendChild(div);
+        function createProject() {
+            const name = prompt("Projektname:");
+            if(!name) return;
+            const newP = { id: Date.now(), name: name, date: new Date().toLocaleDateString(), content: "<h2>"+name+"</h2><p>Starten Sie hier...</p>" };
+            projects.push(newP);
+            localStorage.setItem('projects', JSON.stringify(projects));
+            render();
         }
 
-        function showMenu(e) {
-            menu.style.display = 'block';
-            menu.style.left = e.pageX + 'px';
-            menu.style.top = e.pageY + 'px';
+        function openEditor(p) {
+            currentId = p.id;
+            document.getElementById('currentTitle').innerText = p.name;
+            document.getElementById('mainSlide').innerHTML = p.content;
+            document.getElementById('editor').style.display = 'flex';
         }
 
-        function openEditor(name) {
-            document.getElementById('editorTitle').innerText = name;
-            document.getElementById('canvasTitle').innerText = name;
-            editor.style.display = 'flex';
+        function saveSlide() {
+            const content = document.getElementById('mainSlide').innerHTML;
+            const p = projects.find(x => x.id === currentId);
+            p.content = content;
+            localStorage.setItem('projects', JSON.stringify(projects));
+            alert("Gespeichert!");
         }
 
-        function closeEditor() { editor.style.display = 'none'; }
+        function closeEditor() { document.getElementById('editor').style.display = 'none'; }
         
-        function saveToStorage(p) {
-            let list = JSON.parse(localStorage.getItem('myKeynotes') || '[]');
-            list.push(p);
-            localStorage.setItem('myKeynotes', JSON.stringify(list));
+        function deleteProject() {
+            projects = projects.filter(x => x.id !== currentId);
+            localStorage.setItem('projects', JSON.stringify(projects));
+            render();
         }
 
-        function loadPresentations() {
-            let list = JSON.parse(localStorage.getItem('myKeynotes') || '[]');
-            list.forEach(renderItem);
-        }
-
-        window.onclick = () => menu.style.display = 'none';
-        document.addEventListener('DOMContentLoaded', loadPresentations);
-
-        function deleteCurrent() {
-            document.getElementById('p-' + selectedId).remove();
-            let list = JSON.parse(localStorage.getItem('myKeynotes')).filter(p => p.id !== selectedId);
-            localStorage.setItem('myKeynotes', JSON.stringify(list));
-        }
+        window.onclick = () => document.getElementById('contextMenu').style.display = 'none';
+        render();
     </script>
 </body>
 </html>
