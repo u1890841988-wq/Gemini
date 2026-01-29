@@ -8,128 +8,116 @@
         :root {
             --apple-blue: #007aff;
             --card-bg: #1c1c1e;
-            --editor-bg: #1e1e1e;
+            --sidebar-bg: #161617;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; user-select: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "SF Pro Display", -apple-system, sans-serif; user-select: none; }
 
         body {
-            background: radial-gradient(circle at 50% 0%, #3b82f6 0%, #1e3a8a 100%);
+            background: url('https://www.apple.com/v/ipad-pro/aj/images/overview/experience/specs__e6z9m7w7x9ua_large.jpg') no-repeat center center fixed;
+            background-size: cover;
             height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: white;
-            padding-top: 40px;
             overflow: hidden;
+            padding-top: 2vh;
         }
 
-        /* --- MAIN GUI --- */
+        /* --- MAIN UI --- */
         .main-card {
             background-color: var(--card-bg);
-            width: 85%;
-            max-width: 800px;
-            height: 380px;
-            border-radius: 38px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            width: 80%;
+            max-width: 850px;
+            padding: 60px 0;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             z-index: 10;
         }
 
-        h1 { font-size: 82px; font-weight: 600; margin-bottom: 45px; letter-spacing: -1.5px; }
+        h1 { font-size: 90px; font-weight: 600; margin-bottom: 40px; letter-spacing: -2px; color: white; }
 
         .btn {
             width: 280px; padding: 16px; border-radius: 40px; border: none;
-            font-size: 17px; cursor: pointer; margin-bottom: 12px;
-            font-weight: 500;
+            font-size: 17px; cursor: pointer; margin-bottom: 12px; font-weight: 500;
         }
         .btn-blue { background: var(--apple-blue); color: white; }
         .btn-dark { background: #2c2c2e; color: white; }
 
         .glass-panel {
-            background: rgba(20, 20, 22, 0.55);
-            backdrop-filter: blur(50px) saturate(200%);
-            -webkit-backdrop-filter: blur(50px) saturate(200%);
-            width: 92%;
-            max-width: 950px;
-            height: 480px;
+            background: rgba(20, 20, 22, 0.7);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            width: 90%;
+            max-width: 1000px;
+            height: 450px;
             margin-top: -60px;
-            border-radius: 45px;
-            padding: 50px 30px 30px 30px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 40px;
+            padding: 40px;
+            border: 0.5px solid rgba(255,255,255,0.1);
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 40px;
             overflow-y: auto;
-            max-height: 100%;
         }
 
-        .item { text-align: center; cursor: pointer; }
+        .item { text-align: center; color: white; }
         .thumbnail {
-            width: 140px; aspect-ratio: 16/10;
-            background: #2c2c2e; border-radius: 8px;
-            margin: 0 auto 10px; border: 0.5px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            width: 150px; aspect-ratio: 16/10;
+            background: #333; border-radius: 4px;
+            margin: 0 auto 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* --- EDITOR GUI --- */
+        /* --- EDITOR (IMG_1288 Style) --- */
         #editor {
             position: fixed; inset: 0;
             background: #000; z-index: 2000;
             display: none; flex-direction: column;
         }
 
-        .editor-toolbar {
-            height: 50px;
-            background: #1c1c1e;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            border-bottom: 0.5px solid #333;
+        .editor-top-bar {
+            height: 55px; background: #1c1c1e;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; border-bottom: 0.5px solid #333;
         }
 
-        .toolbar-btn { color: var(--apple-blue); font-size: 17px; cursor: pointer; }
+        .editor-main { display: flex; flex-grow: 1; }
 
-        .editor-content {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #111;
+        .sidebar {
+            width: 180px; background: var(--sidebar-bg);
+            border-right: 0.5px solid #333; padding: 20px 10px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+
+        .slide-thumb {
+            width: 100%; aspect-ratio: 16/10;
+            background: white; border-radius: 4px;
+            border: 2px solid var(--apple-blue);
+        }
+
+        .canvas-area {
+            flex-grow: 1; background: #111;
+            display: flex; justify-content: center; align-items: center;
             padding: 40px;
         }
 
-        .slide-canvas {
-            width: 80%;
-            aspect-ratio: 16/9;
-            background: white;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #333;
+        .slide-white {
+            width: 90%; max-width: 800px; aspect-ratio: 16/9;
+            background: white; color: black; padding: 60px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
-        /* Kontext Menü */
+        /* Context Menu */
         #contextMenu {
-            position: fixed; background: rgba(30, 30, 30, 0.9);
-            backdrop-filter: blur(20px); border-radius: 14px;
-            width: 190px; display: none; z-index: 3000;
-            border: 0.5px solid rgba(255,255,255,0.15);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            position: fixed; background: rgba(35, 35, 35, 0.95);
+            border-radius: 12px; width: 200px; display: none; z-index: 3000;
+            border: 0.5px solid #444; overflow: hidden;
         }
-        .menu-item {
-            padding: 12px 18px; font-size: 16px; 
-            border-bottom: 0.5px solid rgba(255,255,255,0.1);
-            display: flex; justify-content: space-between;
-        }
+        .menu-item { padding: 12px 20px; color: white; border-bottom: 0.5px solid #444; }
     </style>
 </head>
 <body>
@@ -145,14 +133,21 @@
     </div>
 
     <div id="editor">
-        <div class="editor-toolbar">
-            <div class="toolbar-btn" onclick="closeEditor()">❮ Präsentationen</div>
-            <div id="editorTitle" style="font-weight: 600;">Titel</div>
-            <div class="toolbar-btn" style="color: #aaa;">Bearbeiten</div>
+        <div class="editor-top-bar">
+            <div style="color: var(--apple-blue); cursor: pointer;" onclick="closeEditor()">❮ Präsentationen</div>
+            <div id="editorTitle">Präsentation 3</div>
+            <div style="color: var(--apple-blue);">Teilen</div>
         </div>
-        <div class="editor-content">
-            <div class="slide-canvas">
-                <h2 style="font-size: 40px;" id="canvasText">Präsentation</h2>
+        <div class="editor-main">
+            <div class="sidebar">
+                <div class="slide-thumb"></div>
+                <div style="width: 30px; height: 30px; background: #333; border-radius: 5px; margin-top: auto; display: flex; align-items: center; justify-content: center;">+</div>
+            </div>
+            <div class="canvas-area">
+                <div class="slide-white">
+                    <h1 id="canvasTitle" style="color: black; font-size: 48px; text-align: left;">Titel der Präsentation</h1>
+                    <p style="color: #666; font-size: 24px;">Präsentationsuntertitel</p>
+                </div>
             </div>
         </div>
     </div>
@@ -163,19 +158,17 @@
     </div>
 
     <script>
+        // ... (Gleiche Logik wie vorher, aber angepasst an das neue UI)
         const grid = document.getElementById('grid');
         const menu = document.getElementById('contextMenu');
         const editor = document.getElementById('editor');
         let selectedId = null;
         let pressTimer = null;
 
-        document.addEventListener('DOMContentLoaded', loadPresentations);
-        window.onclick = () => menu.style.display = 'none';
-
         function addPresentation() {
-            const name = prompt("Name der Präsentation:", "Unbenannt");
+            const name = prompt("Name:");
             if (!name) return;
-            const p = { name, date: new Date().toLocaleDateString(), id: Date.now() };
+            const p = { name, date: "Heute, 14:30", id: Date.now() };
             saveToStorage(p);
             renderItem(p);
         }
@@ -184,46 +177,27 @@
             const div = document.createElement('div');
             div.className = 'item';
             div.id = 'p-' + p.id;
-            
-            div.onmousedown = (e) => startPress(e, p.id);
-            div.ontouchstart = (e) => startPress(e, p.id);
+            div.onmousedown = (e) => { selectedId = p.id; pressTimer = setTimeout(() => showMenu(e), 600); };
             div.onmouseup = () => clearTimeout(pressTimer);
-            div.ontouchend = () => clearTimeout(pressTimer);
-            div.onclick = () => openPresentation(p.name);
-
-            div.innerHTML = `
-                <div class="thumbnail"></div>
-                <p id="title-${p.id}" style="font-size:14px;">${p.name}</p>
-                <span style="font-size:11px; color:#888;">${p.date}</span>
-            `;
+            div.onclick = () => { if(menu.style.display !== 'block') openEditor(p.name); };
+            div.innerHTML = `<div class="thumbnail"></div><p>${p.name}</p><span>${p.date}</span>`;
             grid.appendChild(div);
         }
 
-        function startPress(e, id) {
-            selectedId = id;
-            pressTimer = setTimeout(() => {
-                showMenu(e);
-            }, 600);
-        }
-
         function showMenu(e) {
-            e.preventDefault();
-            const x = e.pageX || (e.touches ? e.touches[0].pageX : 0);
-            const y = e.pageY || (e.touches ? e.touches[0].pageY : 0);
             menu.style.display = 'block';
-            menu.style.left = x + 'px';
-            menu.style.top = y + 'px';
+            menu.style.left = e.pageX + 'px';
+            menu.style.top = e.pageY + 'px';
         }
 
-        function openPresentation(name) {
-            if (menu.style.display === 'block') return;
+        function openEditor(name) {
             document.getElementById('editorTitle').innerText = name;
-            document.getElementById('canvasText').innerText = name;
+            document.getElementById('canvasTitle').innerText = name;
             editor.style.display = 'flex';
         }
 
         function closeEditor() { editor.style.display = 'none'; }
-
+        
         function saveToStorage(p) {
             let list = JSON.parse(localStorage.getItem('myKeynotes') || '[]');
             list.push(p);
@@ -235,23 +209,13 @@
             list.forEach(renderItem);
         }
 
-        function deleteCurrent() {
-            let list = JSON.parse(localStorage.getItem('myKeynotes') || '[]');
-            list = list.filter(p => p.id !== selectedId);
-            localStorage.setItem('myKeynotes', JSON.stringify(list));
-            document.getElementById('p-' + selectedId).remove();
-        }
+        window.onclick = () => menu.style.display = 'none';
+        document.addEventListener('DOMContentLoaded', loadPresentations);
 
-        function renameCurrent() {
-            const newName = prompt("Neuer Name:");
-            if (!newName) return;
-            let list = JSON.parse(localStorage.getItem('myKeynotes') || '[]');
-            const p = list.find(x => x.id === selectedId);
-            if (p) {
-                p.name = newName;
-                localStorage.setItem('myKeynotes', JSON.stringify(list));
-                document.getElementById('title-' + selectedId).innerText = newName;
-            }
+        function deleteCurrent() {
+            document.getElementById('p-' + selectedId).remove();
+            let list = JSON.parse(localStorage.getItem('myKeynotes')).filter(p => p.id !== selectedId);
+            localStorage.setItem('myKeynotes', JSON.stringify(list));
         }
     </script>
 </body>
