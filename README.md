@@ -2,155 +2,165 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keynote Style Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Keynote iPad Pro</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --apple-blue: #007aff;
+            --glass-bg: rgba(28, 28, 30, 0.7);
+            --card-bg: #1c1c1e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
-            /* Der blaue Wellen-Hintergrund */
-            background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
+            background: radial-gradient(circle at top, #3b82f6 0%, #1d4ed8 50%, #1e3a8a 100%);
             height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
             color: white;
             overflow: hidden;
+            padding-top: 40px;
         }
 
-        /* Obere schwarze Box */
-        .hero-card {
-            background: rgba(30, 30, 30, 0.95);
+        /* Obere Keynote Card */
+        .main-card {
+            background-color: var(--card-bg);
             width: 90%;
-            max-width: 850px;
-            height: 380px;
-            border-radius: 40px 40px 0 0;
+            max-width: 800px;
+            height: 420px;
+            border-radius: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 2;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            z-index: 10;
         }
 
-        .hero-card h1 {
-            font-size: 80px;
-            font-weight: 700;
-            margin-bottom: 40px;
-            letter-spacing: -2px;
+        h1 {
+            font-size: 84px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 50px;
         }
 
         .btn {
-            width: 280px;
-            padding: 14px;
-            border-radius: 25px;
+            width: 260px;
+            padding: 16px;
+            border-radius: 40px; /* Perfekt rund gelutscht */
             border: none;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 17px;
+            font-weight: 400;
             cursor: pointer;
             margin-bottom: 12px;
-            transition: opacity 0.2s;
+            transition: background 0.2s;
         }
 
-        .btn-blue { background: #007aff; color: white; }
+        .btn-blue { background: var(--apple-blue); color: white; }
         .btn-dark { background: #2c2c2e; color: white; }
-        .btn:hover { opacity: 0.8; }
 
-        /* Unterer Glas-Bereich */
-        .content-area {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(25px); /* Der entscheidende Blur-Effekt */
-            -webkit-backdrop-filter: blur(25px);
-            width: 95%;
-            max-width: 950px;
-            height: 450px;
-            margin-top: -30px;
-            border-radius: 40px;
-            padding: 30px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Unterer Glas-Bereich (Dashboard) */
+        .glass-panel {
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            width: 94%;
+            max-width: 920px;
+            height: 400px;
+            margin-top: -60px; /* Schiebt es unter die obere Karte */
+            border-radius: 35px;
+            padding: 20px;
+            border: 0.5px solid rgba(255,255,255,0.1);
         }
 
-        /* Navigation oben im Glas-Bereich */
-        .nav-bar {
+        /* Header im Glas-Panel */
+        .panel-header {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
+            align-items: center;
+            position: relative;
+            margin-bottom: 30px;
         }
 
-        .nav-item {
-            padding: 6px 16px;
+        .tab-switcher {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3px;
             border-radius: 10px;
+        }
+
+        .tab {
+            padding: 6px 16px;
             font-size: 14px;
+            border-radius: 8px;
             cursor: pointer;
         }
 
-        .nav-active { background: rgba(255, 255, 255, 0.2); }
+        .tab.active { background: rgba(255, 255, 255, 0.15); color: #60a5fa; }
 
-        /* Raster für die Präsentationen */
+        /* Grid für die Präsentationen */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 30px;
-            padding: 0 40px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 25px;
+            padding: 0 20px;
         }
 
-        .item {
-            text-align: center;
-            transition: transform 0.2s;
-            cursor: pointer;
-        }
+        .item { text-align: center; }
 
-        .item:hover { transform: scale(1.05); }
-
-        .thumb {
+        .thumbnail {
             width: 130px;
-            height: 85px;
-            background: white;
-            border-radius: 4px;
+            aspect-ratio: 16/10;
+            background: #2c2c2e;
+            border-radius: 6px;
             margin: 0 auto 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 0.5px solid rgba(255,255,255,0.1);
         }
 
-        .item p { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
-        .item span { font-size: 11px; color: rgba(255,255,255,0.6); }
+        .item p { font-size: 13px; font-weight: 500; }
+        .item span { font-size: 11px; color: #8e8e93; display: block; margin-top: 2px; }
 
     </style>
 </head>
 <body>
 
-    <div class="hero-card">
+    <div class="main-card">
         <h1>Keynote</h1>
         <button class="btn btn-blue">Thema auswählen</button>
         <button class="btn btn-dark">Gliederung starten</button>
     </div>
 
-    <div class="content-area">
-        <div class="nav-bar">
-            <div class="nav-item">Verlauf</div>
-            <div class="nav-item nav-active">Geteilt</div>
-            <div class="nav-item">Durchsuchen</div>
+    <div class="glass-panel">
+        <div class="panel-header">
+            <div class="tab-switcher">
+                <div class="tab active">Verlauf</div>
+                <div class="tab">Geteilt</div>
+                <div class="tab">Durchsuchen</div>
+            </div>
         </div>
 
         <div class="grid">
             <div class="item">
-                <div class="thumb" style="background: #333;"></div>
+                <div class="thumbnail" style="background: linear-gradient(45deg, #444, #222);"></div>
                 <p>Präsentation 4</p>
                 <span>Heute, 14:13</span>
+                <span>4,8 MB</span>
             </div>
             <div class="item">
-                <div class="thumb"></div>
+                <div class="thumbnail" style="background: white;"></div>
                 <p>Präsentation 3</p>
                 <span>18.11.25, 11:13</span>
+                <span>409 KB</span>
             </div>
             <div class="item">
-                <div class="thumb" style="background: linear-gradient(to right, #4facfe, #00f2fe);"></div>
-                <p>Urlaub</p>
-                <span>16.06.25, 10:26</span>
+                <div class="thumbnail" style="background: #fff; display:flex; align-items:center; justify-content:center; color:#333; font-size:8px;">Völkerrecht</div>
+                <p>Präsentation</p>
+                <span>11.11.25, 12:30</span>
+                <span>55,3 MB</span>
             </div>
         </div>
     </div>
